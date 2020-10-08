@@ -1,7 +1,7 @@
 <?php
 $handler = fopen("php://stdin", "r");
 
-$gridSize = 10;
+$gridSize = 9;
 
 function initGrid($gridSize)
 {
@@ -32,34 +32,32 @@ function createBoat($gridSize, &$grid)
     $randomBoatSize = $boatList[$randomBoatSizeKey];
 
     if ($isVertical) {
-      $randomColumn = rand($randomBoatSize, $gridSize) - $randomBoatSize;
-      $randomRow = rand(0, $gridSize);
+      $randomRow = rand($randomBoatSize, $gridSize - 1) - $randomBoatSize;
+      $randomColumn = rand(0, $gridSize - 1);
     } else {
-      $randomColumn = rand(0, $gridSize);
-      $randomRow = rand($randomBoatSize, $gridSize) - $randomBoatSize;
+      $randomRow = rand(0, $gridSize - 1);
+      $randomColumn = rand($randomBoatSize, $gridSize - 1) - $randomBoatSize;
     }
 
     setBoatPosition(
       $grid,
-      $randomRow,
       $randomColumn,
+      $randomRow,
       $randomBoatSize,
       $isVertical
     );
-
   }
-  
 };
 
 function setBoatPosition(&$grid, $x, $y, $boatSize, $isVertical)
 {
   if ($isVertical) {
     for ($i = 0; $i < $boatSize; $i++) {
-      $grid[$x + $i][$y]['isBoat'] = true;
+      $grid[$x][$y + $i]['isBoat'] = true;
     }
   } else {
     for ($i = 0; $i < $boatSize; $i++) {
-      $grid[$x][$y + $i]['isBoat'] = true;
+      $grid[$x + $i][$y]['isBoat'] = true;
     }
   }
 };
@@ -68,13 +66,15 @@ function verifyPosition($x, $y, &$the_grid)
 {
   if ($the_grid[$x - 1][$y - 1]['targeted']) {
 
-    
-
-    return 'O ';
-  } else {
     if ($the_grid[$x - 1][$y - 1]['isBoat']) {
       return 'X ';
     };
+
+    return 'O ';
+  } else {
+    // if ($the_grid[$x - 1][$y - 1]['isBoat']) {
+    //   return 'X ';
+    // };
     return '• ';
   };
 };
@@ -91,16 +91,26 @@ function displayGrid(&$the_grid, $gridSize)
     for ($o = 0; $o < $gridSize + 2; $o++) {
 
 
-      if ($i === 0 || $i === $gridSize + 1) {
+      if ($i === 0 && $o !== $gridSize + 1) {
+
+        print_r($o . " ");
+        array_push($column, $o . " ");
+      } else if ($i === $gridSize + 1) {
+
+        print_r("* ");
         array_push($column, "* ");
-        print_r('* ');
       } else {
 
-        if ($o === 0 || $o === $gridSize + 1) {
+        if ($o === 0) {
 
-          print_r('* ');
+          print_r($i . " ");
+          array_push($column, $i . " ");
+        } else if ($o === $gridSize + 1) {
+
+          print_r("* ");
           array_push($column, "* ");
         } else {
+
           $verification = verifyPosition($o, $i, $the_grid);
 
           print_r($verification);
