@@ -4,7 +4,14 @@ require_once('grid.php');
 
 require_once('boat.php');
 
-function turn($handl, &$the_grid, $gridSize)
+require_once('ui.php');
+
+function gameover() {
+  clearConsole();
+  echo "Game Over";
+}
+
+function turn($handl, &$the_grid, $gridSize, &$ammo)
 {
   echo "Coordonnées (x,y): ";
   $coord = fgets($handl);
@@ -12,8 +19,21 @@ function turn($handl, &$the_grid, $gridSize)
 
   $the_grid[$array_coord[0] - 1][$array_coord[1] - 1]["targeted"] = true;
   clearConsole();
+  $ammo--;
+  
+  displayUI($ammo);
   displayGrid($the_grid, $gridSize);
-  turn($handl, $the_grid, $gridSize);
+
+  if($ammo === 0) {
+
+    gameover();
+
+  } else {
+
+    turn($handl, $the_grid, $gridSize, $ammo);
+
+  }
+
 };
 
 function clearConsole()
