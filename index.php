@@ -1,7 +1,7 @@
 <?php
 $handler = fopen("php://stdin", "r");
 
-$gridSize = 7;
+$gridSize = 10;
 
 function initGrid($gridSize)
 {
@@ -20,21 +20,23 @@ function initGrid($gridSize)
   return $grid;
 };
 
-function createBoat($gridSize, $grid)
+function createBoat($gridSize, &$grid)
 {
   $boats = 3;
   $boatList = [2, 3, 4];
 
   for ($boat = 0; $boat < $boats; $boat++) {
+
     $isVertical = rand(0, 1) ? true : false;
-    $randomBoatSize = array_rand($boatList, 1);
+    $randomBoatSizeKey = array_rand($boatList, 1);
+    $randomBoatSize = $boatList[$randomBoatSizeKey];
 
     if ($isVertical) {
-      $randomRow = rand($randomBoatSize, $gridSize) - $randomBoatSize;
-      $randomColumn = rand(0, $gridSize);
-    } else {
-      $randomRow = rand(0, $gridSize);
       $randomColumn = rand($randomBoatSize, $gridSize) - $randomBoatSize;
+      $randomRow = rand(0, $gridSize);
+    } else {
+      $randomColumn = rand(0, $gridSize);
+      $randomRow = rand($randomBoatSize, $gridSize) - $randomBoatSize;
     }
 
     setBoatPosition(
@@ -44,10 +46,12 @@ function createBoat($gridSize, $grid)
       $randomBoatSize,
       $isVertical
     );
+
   }
+  
 };
 
-function setBoatPosition($grid, $x, $y, $boatSize, $isVertical)
+function setBoatPosition(&$grid, $x, $y, $boatSize, $isVertical)
 {
   if ($isVertical) {
     for ($i = 0; $i < $boatSize; $i++) {
@@ -64,13 +68,13 @@ function verifyPosition($x, $y, &$the_grid)
 {
   if ($the_grid[$x - 1][$y - 1]['targeted']) {
 
-    if ($the_grid[$x - 1][$y - 1]['isBoat']) {
-      return 'X ';
-    };
+    
 
     return 'O ';
   } else {
-
+    if ($the_grid[$x - 1][$y - 1]['isBoat']) {
+      return 'X ';
+    };
     return '• ';
   };
 };
@@ -140,6 +144,8 @@ clearConsole();
 $grid = initGrid($gridSize);
 
 createBoat($gridSize, $grid);
+
+$grid;
 
 displayGrid($grid, $gridSize);
 
