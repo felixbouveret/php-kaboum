@@ -76,6 +76,8 @@ function turn($handl, &$the_grid)
   $array_coord = array_map('intval', explode(',', $coord));
 
   $the_grid[$array_coord[0] - 1][$array_coord[1] - 1]["targeted"] = true;
+  system('clear');
+  system('cls');
   displayGrid($the_grid);
   turn($handl, $the_grid);
 };
