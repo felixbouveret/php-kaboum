@@ -1,0 +1,19 @@
+{
+  "name": "php-kaboum",
+  "version": "1.0.0",
+  "description": "The best Naval Warfare of the World",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kaboum" : "php run.php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixbouveret/php-kaboum.git"
+  },
+  "author": "Benoit Lamonica & Felix Bouveret",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felixbouveret/php-kaboum/issues"
+  },
+  "homepage": "https://github.com/felixbouveret/php-kaboum#readme"
+}
