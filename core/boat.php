@@ -1,8 +1,7 @@
 <?php
 
-function createBoat($gridSize, &$grid)
+function createBoat($gridSize, &$grid, &$boats)
 {
-  $boats = 3;
   $boatList = [2, 3, 4];
 
   for ($boat = 0; $boat < $boats; $boat++) {

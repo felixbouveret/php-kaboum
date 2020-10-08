@@ -6,11 +6,13 @@ require_once('core/game_handler.php');
 
 clearConsole();
 
+setDifficulty($handler, $gridSize, $nbBoat, $nbAmmo);
+
 $grid = initGrid($gridSize);
 
-createBoat($gridSize, $grid);
+createBoat($gridSize, $grid, $nbBoat);
 
-displayUI($ammo);
+displayUI($nbAmmo);
 displayGrid($grid, $gridSize);
 
-turn($handler, $grid, $gridSize, $ammo);
+turn($handler, $grid, $gridSize, $nbAmmo);

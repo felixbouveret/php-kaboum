@@ -1,5 +1,6 @@
 <?php
 
 $handler = fopen("php://stdin", "r");
-$gridSize = 9;
-$ammo = 3;
+$gridSize = 0;
+$nbAmmo = 0;
+$nbBoats = 0;
