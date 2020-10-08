@@ -145,8 +145,7 @@ function turn($handl, &$the_grid, $gridSize)
 
 function clearConsole()
 {
-  system('clear');
-  system('cls');
+  strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? system('cls') : system('clear');
 };
 
 clearConsole();
