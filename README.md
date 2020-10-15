@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">Php Kaboum</h1>
-
+<p align="center">Kaboum is a simple native php battleship game displayed in your console.</p>
 
 ## Play the Kaboum
 
