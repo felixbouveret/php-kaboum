@@ -1,42 +1,61 @@
 <?php
 
-function createBoat($gridSize, &$grid, &$boats)
-{
-  $boatList = [2, 3, 4];
+class Boat {
 
-  for ($boat = 0; $boat < $boats; $boat++) {
+  const BOATLIST = [2,3,4];
+  private $boats;
+  private $grid;
+  private $gridSize;
 
-    $isVertical = rand(0, 1) ? true : false;
-    $randomBoatSizeKey = array_rand($boatList, 1);
-    $randomBoatSize = $boatList[$randomBoatSizeKey];
+  function __construct(object $grid, int $boats) {
+
+    $this->grid = $grid;
+    $this->gridSize = count($grid->getGrid());
+    $this->boats = $boats;
+
+  }
+
+  public function create() {
+
+    for ($boat = 0; $boat < $this->boats; $boat++) {
+
+      $isVertical = rand(0, 1) ? true : false;
+      $randomBoatSizeKey = array_rand(self::BOATLIST, 1);
+      $randomBoatSize = self::BOATLIST[$randomBoatSizeKey];
+
+      if ($isVertical) {
+        $randomRow = rand($randomBoatSize, $this->gridSize - 1) - $randomBoatSize;
+        $randomColumn = rand(0, $this->gridSize - 1);
+      } else {
+        $randomRow = rand(0, $this->gridSize - 1);
+        $randomColumn = rand($randomBoatSize, $this->gridSize - 1) - $randomBoatSize;
+      }
+
+      $this->setBoatPosition(
+        $randomColumn,
+        $randomRow,
+        $randomBoatSize,
+        $isVertical
+      );
+
+    }
+  }
+
+  public function setBoatPosition($column, $row, $boatSize, $isVertical)
+  {
+    $grid = $this->grid->getGrid();
 
     if ($isVertical) {
-      $randomRow = rand($randomBoatSize, $gridSize - 1) - $randomBoatSize;
-      $randomColumn = rand(0, $gridSize - 1);
+      for ($i = 0; $i < $boatSize; $i++) {
+        $grid[$row][$column + $i]['isBoat'] = true;
+      }
     } else {
-      $randomRow = rand(0, $gridSize - 1);
-      $randomColumn = rand($randomBoatSize, $gridSize - 1) - $randomBoatSize;
+      for ($i = 0; $i < $boatSize; $i++) {
+        $grid[$row + $i][$column]['isBoat'] = true;
+      }
     }
 
-    setBoatPosition(
-      $grid,
-      $randomColumn,
-      $randomRow,
-      $randomBoatSize,
-      $isVertical
-    );
+    $this->grid->setGrid($grid);
   }
-};
+}
 
-function setBoatPosition(&$grid, $x, $y, $boatSize, $isVertical)
-{
-  if ($isVertical) {
-    for ($i = 0; $i < $boatSize; $i++) {
-      $grid[$x][$y + $i]['isBoat'] = true;
-    }
-  } else {
-    for ($i = 0; $i < $boatSize; $i++) {
-      $grid[$x + $i][$y]['isBoat'] = true;
-    }
-  }
-};

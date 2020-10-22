@@ -18,49 +18,61 @@ function clearConsole()
   
 };
 
-function setDifficulty($handl, &$gridSize, &$nbBoat, &$nbAmmo) {
+function checkDifficulty($handler, &$gridSize, &$nbBoat, &$nbAmmo, $paramDifficulty) {
+
+  clearConsole();
+  
+  while(!setDifficulty($handler, $gridSize, $nbBoat, $nbAmmo, $paramDifficulty)) {
+    echo "Error, you must type a NUMBER between 1 and 3 \n\r";
+  };
+
+  clearConsole();
+
+}
+
+function getClientDifficulty($handl) {
+  $clientInput = fgets($handl);
+  $clientDifficultyString = trim($clientInput);
+  $clientDifficulty = intval($clientDifficultyString);
+
+  return $clientDifficulty;
+}
+
+function setDifficulty($handl, &$gridSize, &$nbBoat, &$nbAmmo, $paramDifficulty) {
 
   echo "Which difficulty (1 : Easy, 2 : Medium, 3 : Hard) : ";
 
-  $clientDifficulty = fgets($handl);
-  $clientDifficulty = trim($clientDifficulty);
-  $clientDifficulty = intval($clientDifficulty);
+  $clientDifficulty = getClientDifficulty($handl);
 
-  if(is_int($clientDifficulty)) {
-    if($clientDifficulty >= 1 && $clientDifficulty <= 3) {
-      if($clientDifficulty === 1) {
+  if(!is_int($clientDifficulty)) {return false;}
+  if($clientDifficulty < 1 || $clientDifficulty > 3) {return false;}
 
-        $gridSize = 5;
-        $nbBoat = 1;
-        $nbAmmo = 20;
+  switch($clientDifficulty) {
 
-      }elseif($clientDifficulty === 2) {
+    case 1 :
+      $difficultyChoosen = $paramDifficulty['easy'];
+    break;
 
-        $gridSize = 7;
-        $nbBoat = 2;
-        $nbAmmo = 20;
+    case 2 :
+      $difficultyChoosen = $paramDifficulty['medium'];
+    break;
 
-      }else{
+    case 3 :
+      $difficultyChoosen = $paramDifficulty['hard'];
+    break;
 
-        $gridSize = 9;
-        $nbBoat = 3;
-        $nbAmmo = 15;
-
-      }
-    } else {
-      clearConsole();
-      echo "You must type a number between 1 and 3 \n\r";
-      setDifficulty($handl, $gridSize, $nbBoat, $nbAmmo);
-
-    }
-
-  } else {
-
-    clearConsole();
-    echo "You must type 1 2 or 3 ! \n\r";
-    setDifficulty($handl, $gridSize, $nbBoat, $nbAmmo);
+    default :
+      return false;
+    break;
 
   }
+  
+  $gridSize = $difficultyChoosen['gridSize'];
+  $nbBoat = $difficultyChoosen['nbBoat'];
+  $nbAmmo = $difficultyChoosen['nbAmmo'];
+
+  return true;
+    
 }
 
 function turn($handl, &$the_grid, $gridSize, &$ammo)

@@ -1,84 +1,104 @@
 <?php 
 
-function initGrid($gridSize)
-{
-  $grid = array();
+class Grid {
 
-  for ($i = 0; $i < $gridSize; $i++) {
-    array_push($grid, []);
-    for ($o = 0; $o < $gridSize; $o++) {
-      array_push($grid[$i], [
-        'targeted' => false,
-        'isBoat' => false
-      ]);
-    }
-  };
+  private $gridSize;
+  private $grid;
 
-  return $grid;
-};
+  const BORDER = '* ';
+  const TOUCHED = 'X ';
+  const BLANK = '• ';
+  const NOT_TOUCHED = 'O ';
 
+  function __construct(int $gridSize) {
 
-function verifyPosition($x, $y, &$the_grid)
-{
-  if ($the_grid[$x - 1][$y - 1]['targeted']) {
+    $this->gridSize = $gridSize;
 
-    if ($the_grid[$x - 1][$y - 1]['isBoat']) {
-      return 'X ';
-    };
+    $grid = array();
 
-    return 'O ';
-  } 
-    return '• ';
-
-};
-
-
-function displayGrid(&$the_grid, $gridSize)
-{
-  $displayGrid = [];
-
-  for ($i = 0; $i < $gridSize + 2; $i++) {
-
-    $column = [];
-
-    for ($o = 0; $o < $gridSize + 2; $o++) {
-
-
-      if ($i === 0 && $o !== $gridSize + 1) {
-
-        print_r($o . " ");
-        array_push($column, $o . " ");
-      } else if ($i === $gridSize + 1) {
-
-        print_r("* ");
-        array_push($column, "* ");
-      } else {
-
-        if ($o === 0) {
-
-          print_r($i . " ");
-          array_push($column, $i . " ");
-        } else if ($o === $gridSize + 1) {
-
-          print_r("* ");
-          array_push($column, "* ");
-        } else {
-
-          $verification = verifyPosition($o, $i, $the_grid);
-
-          print_r($verification);
-          array_push($column, $verification);
-        }
-      };
-
-      if ($o === $gridSize + 1) {
-
-        print_r("\n\r");
+    for ($i = 0; $i < $gridSize; $i++) {
+      array_push($grid, []);
+      for ($o = 0; $o < $gridSize; $o++) {
+        array_push($grid[$i], [
+          'targeted' => false,
+          'isBoat' => false
+        ]);
       }
     };
-    array_push($displayGrid, $column);
-  };
 
-  return $displayGrid;
-};
+    $this->grid = $grid;
+
+  }
+
+  public static function create(int $gridSize) {
+    $class = new Grid($gridSize);
+    return $class;
+  }
+
+  public function getGrid() {
+    return $this->grid;
+  }
+
+  public function setGrid(array $newGrid) {
+    $this->grid = $newGrid;
+  }
+
+  private function verifyPosition($column, $row) {
+
+    if ($this->grid[$row - 1][$column - 1]['targeted']) {
+
+      if ($this->grid[$row - 1][$column - 1]['isBoat']) {
+        return self::TOUCHED;
+      };
+  
+      return self::NOT_TOUCHED;
+
+    } 
+
+    return self::BLANK;
+
+  }
+
+  public function displayGrid() {
+
+    for ($row = 0; $row < $this->gridSize + 2; $row++) {
+      for ($column = 0; $column < $this->gridSize + 2; $column++) {
+        if ($column === 0 && $row !== $this->gridSize + 1) {
+  
+          print_r($row . " ");
+  
+        } else if ($column === $this->gridSize + 1) {
+  
+          print_r(self::BORDER);
+  
+        } else {
+  
+          if ($row === 0) {
+  
+            print_r($column . " ");
+
+          } else if ($row === $this->gridSize + 1) {
+
+            print_r(self::BORDER);
+
+          } else {
+  
+            $verification = $this->verifyPosition($column, $row);
+            print_r($verification);
+  
+          }
+        };
+        if ($column === $this->gridSize + 1) {
+  
+          print_r("\n\r");
+
+        }
+      };
+    };
+  }
+
+}
+
+
+
 
