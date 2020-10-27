@@ -15,6 +15,7 @@ $boats = new Boats($grid, $params['nbBoat']);
 $boats->create();
 
 $ui = GameUI::display($params['nbAmmo']);
+$ui->displayAmmo();
 $grid->displayGrid();
 
 turn($handler, $grid, $gridSize, $ui);
