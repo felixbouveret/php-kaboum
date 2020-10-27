@@ -8,7 +8,8 @@ require_once('ui.php');
 
 require_once('difficulty.php');
 
-function gameover() {
+function gameover()
+{
   clearConsole();
   echo "Game Over";
 }
@@ -17,30 +18,28 @@ function clearConsole()
 {
 
   strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? system('cls') : system('clear');
-  
 };
 
-function turn($handl, &$the_grid, $gridSize, &$ammo)
+function turn($handl, &$grid, $gridSize, $ui)
 {
   echo "Coordonnées (x,y): ";
   $coord = fgets($handl);
   $array_coord = array_map('intval', explode(',', $coord));
 
-  $the_grid[$array_coord[0] - 1][$array_coord[1] - 1]["targeted"] = true;
+  $gridArray = $grid->getGrid();
+  $gridArray[$array_coord[0] - 1][$array_coord[1] - 1]["targeted"] = true;
+  $grid->setGrid($gridArray);
   clearConsole();
-  $ammo--;
 
-  displayUI($ammo);
-  displayGrid($the_grid, $gridSize);
+  $ui->decrementAmmo();
+  $ui->displayAmmo();
+  $grid->displayGrid();
 
-  if($ammo === 0) {
+  if ($ui->getAmmo() === 0) {
 
     gameover();
-
   } else {
 
-    turn($handl, $the_grid, $gridSize, $ammo);
-
+    turn($handl, $grid, $gridSize, $ui);
   }
-
 };

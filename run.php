@@ -9,12 +9,12 @@ $difficulty = new Difficulty($handler, $paramDifficulty);
 $difficulty->set();
 
 $params = $difficulty->getParams();
-                
+
 $grid = Grid::create($params['gridSize']);
 $boats = new Boats($grid, $params['nbBoat']);
 $boats->create();
 
-displayUI($nbAmmo);
+$ui = GameUI::display($params['nbAmmo']);
 $grid->displayGrid();
 
-turn($handler, $grid, $gridSize, $nbAmmo);
+turn($handler, $grid, $gridSize, $ui);
