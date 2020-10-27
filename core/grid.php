@@ -38,6 +38,10 @@ class Grid {
   public function getGrid() {
     return $this->grid;
   }
+  
+  public function getGridSize() {
+    return $this->gridSize;
+  }
 
   public function setGrid(array $newGrid) {
     $this->grid = $newGrid;

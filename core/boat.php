@@ -1,6 +1,6 @@
 <?php
 
-class Boat {
+class Boats {
 
   const BOATLIST = [2,3,4];
   private $boats;
@@ -10,7 +10,7 @@ class Boat {
   function __construct(object $grid, int $boats) {
 
     $this->grid = $grid;
-    $this->gridSize = count($grid->getGrid());
+    $this->gridSize = $grid->getGridSize();
     $this->boats = $boats;
 
   }

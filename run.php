@@ -5,10 +5,13 @@ require_once('params.php');
 require_once('core/game_handler.php');
 // ---------------------------------------------------------------
 
-checkDifficulty($handler, $gridSize, $nbBoat, $nbAmmo, $paramDifficulty);
+$difficulty = new Difficulty($handler, $paramDifficulty);
+$difficulty->set();
 
-$grid = Grid::create($gridSize);
-$boats = new Boat($grid, $nbBoat);
+$params = $difficulty->getParams();
+                
+$grid = Grid::create($params['gridSize']);
+$boats = new Boats($grid, $params['nbBoat']);
 $boats->create();
 
 displayUI($nbAmmo);
