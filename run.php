@@ -2,7 +2,12 @@
 
 // Require -------------------------------------------------------
 require_once('params.php');
-require_once('core/game_handler.php');
+require_once('core/grid.php');
+require_once('core/boat.php');
+require_once('core/ui.php');
+require_once('core/difficulty.php');
+require_once('core/game.php');
+require_once('helpers/helpers.php');
 // ---------------------------------------------------------------
 
 $difficulty = new Difficulty($handler, $paramDifficulty);
@@ -18,4 +23,4 @@ $ui = GameUI::display($params['nbAmmo']);
 $ui->displayAmmo();
 $grid->displayGrid();
 
-turn($handler, $grid, $gridSize, $ui);
+GameHandler::start($ui, $grid, $handler);

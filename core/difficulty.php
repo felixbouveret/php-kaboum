@@ -1,4 +1,5 @@
 <?php 
+
 class Difficulty {
 
     private $nbAmmo;
@@ -37,7 +38,7 @@ class Difficulty {
     }
 
     protected function setDifficulty() {
-        
+
         echo "Which difficulty (1 : Easy, 2 : Medium, 3 : Hard) : ";
 
         $clientDifficulty = $this->getClientDifficulty();

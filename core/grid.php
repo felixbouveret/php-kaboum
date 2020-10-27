@@ -5,10 +5,10 @@ class Grid {
   private $gridSize;
   private $grid;
 
-  const BORDER = '* ';
-  const TOUCHED = 'X ';
-  const BLANK = '• ';
-  const NOT_TOUCHED = 'O ';
+  const BORDER = '🌴';
+  const TOUCHED = '💥';
+  const BLANK = '🌊';
+  const NOT_TOUCHED = '⬛️';
 
   function __construct(int $gridSize) {
 
@@ -38,13 +38,27 @@ class Grid {
   public function getGrid() {
     return $this->grid;
   }
-  
+
   public function getGridSize() {
     return $this->gridSize;
   }
 
   public function setGrid(array $newGrid) {
     $this->grid = $newGrid;
+  }
+
+  public function isGridWin() {
+
+    foreach($this->grid as $row) {
+      foreach($row as $column) {
+        if(!$column['isBoat']) { continue; }
+        if($column['targeted']) { continue; } 
+        return false; 
+      }
+    }
+
+    return true;
+
   }
 
   private function verifyPosition($column, $row) {
@@ -58,7 +72,6 @@ class Grid {
       return self::NOT_TOUCHED;
 
     } 
-
     return self::BLANK;
 
   }

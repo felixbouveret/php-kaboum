@@ -4,12 +4,6 @@
 // ------------------------------------------------
 $handler = fopen("php://stdin", "r");
 
-// Params initialisation 
-// ------------------------------------------------
-$gridSize = 0;
-$nbAmmo = 0;
-$nbBoats = 0;
-
 // Array or different difficulty
 // ------------------------------------------------
 
