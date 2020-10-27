@@ -1,6 +1,6 @@
 {
   "name": "php-kaboum",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The best Naval Warfare of the World",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
