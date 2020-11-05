@@ -1,5 +1,7 @@
 <?php 
 
+namespace core;
+
 class Difficulty {
 
     private $nbAmmo;

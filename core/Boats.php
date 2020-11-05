@@ -1,5 +1,7 @@
 <?php
 
+namespace core;
+
 class Boats {
 
   const BOATLIST = [2,3,4];
@@ -58,4 +60,3 @@ class Boats {
     $this->grid->setGrid($grid);
   }
 }
-

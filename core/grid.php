@@ -1,5 +1,7 @@
 <?php 
 
+namespace core;
+
 class Grid {
 
   private $gridSize;
@@ -115,7 +117,3 @@ class Grid {
   }
 
 }
-
-
-
-

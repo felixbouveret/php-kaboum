@@ -1,13 +1,14 @@
 <?php
 
+use core\Boats;
+use core\Difficulty;
+use core\GameHandler;
+use core\Grid;
+use core\GameUI;
 // Require -------------------------------------------------------
 require_once('params.php');
-require_once('core/grid.php');
-require_once('core/boat.php');
-require_once('core/ui.php');
-require_once('core/difficulty.php');
-require_once('core/game.php');
 require_once('helpers/helpers.php');
+require_once('autoload.php');
 // ---------------------------------------------------------------
 
 $difficulty = new Difficulty($handler, $paramDifficulty);

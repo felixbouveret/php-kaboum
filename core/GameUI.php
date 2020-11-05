@@ -1,4 +1,7 @@
 <?php
+
+namespace core;
+
 class GameUI
 {
     private $ammo;
